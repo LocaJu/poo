@@ -1,0 +1,10 @@
+<view class="mask" wx:if="{{show}}" catchtap="handleCancel">
+  <view class="modal" catchtap="">
+    <text class="title">需要登录</text>
+    <text class="desc">登录后即可发布、收藏房源</text>
+    <view class="btns">
+      <view class="btn cancel" bindtap="handleCancel">取消</view>
+      <view class="btn primary" bindtap="handleConfirm">去登录</view>
+    </view>
+  </view>
+</view>

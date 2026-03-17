@@ -1,0 +1,65 @@
+<view class="container">
+  <view class="form-item">
+    <text class="label">标题 *</text>
+    <input class="input" placeholder="20字以内" value="{{title}}" maxlength="20" bindinput="onTitleInput" />
+  </view>
+  <view class="form-item">
+    <text class="label">户型</text>
+    <picker mode="selector" range="{{HOUSE_TYPE}}" bindchange="onTypeChange">
+      <view class="picker">{{type || '请选择'}}</view>
+    </picker>
+  </view>
+  <view class="form-item">
+    <text class="label">面积(㎡)</text>
+    <input class="input" type="digit" placeholder="数字" value="{{area}}" bindinput="onAreaInput" />
+  </view>
+  <view class="form-item">
+    <text class="label">租金(元/月) *</text>
+    <input class="input" type="digit" placeholder="数字" value="{{price}}" bindinput="onPriceInput" />
+  </view>
+  <view class="form-item">
+    <text class="label">押金方式</text>
+    <picker mode="selector" range="{{DEPOSIT_OPTIONS}}" bindchange="onDepositChange">
+      <view class="picker">{{deposit || '请选择'}}</view>
+    </picker>
+  </view>
+  <view class="form-item">
+    <text class="label">租期起</text>
+    <picker mode="date" bindchange="onStartDateChange">
+      <view class="picker">{{startDate || '选择日期'}}</view>
+    </picker>
+  </view>
+  <view class="form-item">
+    <text class="label">租期止</text>
+    <picker mode="date" bindchange="onEndDateChange">
+      <view class="picker">{{endDate || '选择日期'}}</view>
+    </picker>
+  </view>
+  <view class="form-item">
+    <text class="label">可入住时间</text>
+    <picker mode="date" bindchange="onAvailableChange">
+      <view class="picker">{{availableDate || '选择日期'}}</view>
+    </picker>
+  </view>
+  <view class="form-item">
+    <text class="label">描述</text>
+    <textarea class="textarea" placeholder="500字以内" value="{{description}}" maxlength="500" bindinput="onDescInput" />
+  </view>
+  <view class="form-item">
+    <text class="label">图片(最多9张)</text>
+    <view class="images">
+      <block wx:for="{{images}}" wx:key="*this">
+        <view class="img-wrap">
+          <image src="{{item}}" mode="aspectFill" />
+          <view class="del" data-idx="{{index}}" bindtap="removeImage">×</view>
+        </view>
+      </block>
+      <view class="add-img" wx:if="{{images.length < 9}}" bindtap="chooseImage">+</view>
+    </view>
+  </view>
+  <view class="form-item">
+    <text class="label">位置</text>
+    <view class="location-btn" bindtap="chooseLocation">{{location ? location.address : '选择位置'}}</view>
+  </view>
+  <button class="submit-btn" bindtap="submit">提交发布</button>
+</view>

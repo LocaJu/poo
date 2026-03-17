@@ -1,0 +1,11 @@
+<view class="container">
+  <map
+    class="map"
+    latitude="{{latitude}}"
+    longitude="{{longitude}}"
+    scale="14"
+    markers="{{markers}}"
+    bindmarkertap="onMarkerTap"
+    show-location
+  />
+</view>

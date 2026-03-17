@@ -1,0 +1,4 @@
+-- SubletHub 数据库建表参考
+-- 后端已改为 MyBatis，不再使用 JPA 自动建表，需手动执行建表脚本。
+-- 完整建表 SQL 见：backend/src/main/resources/schema.sql
+-- 使用前请创建数据库：CREATE DATABASE sublethub DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

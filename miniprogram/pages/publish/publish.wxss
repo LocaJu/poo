@@ -1,0 +1,11 @@
+.form-item { margin-bottom: 32rpx; }
+.form-item .label { display: block; font-size: 28rpx; color: #333; margin-bottom: 12rpx; }
+.form-item .input, .form-item .picker { background: #fff; padding: 24rpx; border-radius: 8rpx; font-size: 28rpx; }
+.form-item .textarea { background: #fff; padding: 24rpx; border-radius: 8rpx; min-height: 160rpx; font-size: 28rpx; }
+.images { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.img-wrap { position: relative; width: 160rpx; height: 160rpx; }
+.img-wrap image { width: 100%; height: 100%; border-radius: 8rpx; }
+.img-wrap .del { position: absolute; top: 0; right: 0; width: 40rpx; height: 40rpx; background: rgba(0,0,0,0.5); color: #fff; text-align: center; line-height: 40rpx; border-radius: 0 8rpx 0 0; }
+.add-img { width: 160rpx; height: 160rpx; border: 2rpx dashed #ccc; border-radius: 8rpx; display: flex; align-items: center; justify-content: center; font-size: 48rpx; color: #999; }
+.location-btn { background: #fff; padding: 24rpx; border-radius: 8rpx; font-size: 28rpx; color: #666; }
+.submit-btn { margin-top: 48rpx; background: #07c160; color: #fff; border: none; border-radius: 8rpx; }

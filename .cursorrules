@@ -1,0 +1,402 @@
+你是一名资深前端工程师兼后端java工程师
+
+本项目为转租信息发布平台微信小程序，旨在帮助用户快速发布和查找转租房源。本文档是Cursor AI的规则文件，用于指导AI生成符合项目架构、编码规范和技术栈的代码。
+
+📁 项目概述
+项目名称：SubletHub（转租信息发布平台）
+
+平台形态：微信小程序 + 管理后台（Web）
+
+目标用户：转租人（原租客）、求租者（新租客）、平台管理员
+
+核心功能：房源发布/搜索、实名认证、即时通讯、地图找房、举报审核
+
+
+🛠️ 技术栈
+前端（小程序）
+框架：UniApp
+
+UI库：WeUI
+
+地图：腾讯地图小程序SDK
+
+图表：ec-canvas（用于管理后台数据展示）
+
+后端
+自建方案：SpringBoot(JAVA) + MySQL + Redis
+
+API风格：RESTful API，返回格式统一为 { code: 0, data: any, message: string }
+
+即时通讯：云开发自带数据库实时监听 或 集成腾讯云IM SDK（若需复杂聊天功能）
+
+数据库
+MySQL
+
+核心集合/表：
+
+users（用户）
+
+houses（房源）
+
+favorites（收藏）
+
+messages（聊天消息）
+
+complaints（举报）
+
+audits（审核记录）
+
+stats（统计）
+
+
+📐 项目结构规范
+小程序端（原生）结构
+project/
+├── miniprogram/
+│   ├── pages/                # 页面文件夹
+│   │   ├── index/             # 首页
+│   │   ├── publish/           # 发布房源
+│   │   ├── detail/            # 房源详情
+│   │   ├── search/            # 搜索/筛选
+│   │   ├── map/               # 地图找房
+│   │   ├── chat/              # 聊天列表
+│   │   ├── chat-detail/       # 聊天详情
+│   │   ├── profile/           # 个人中心
+│   │   ├── my-houses/         # 我的房源
+│   │   ├── favorites/         # 我的收藏
+│   │   └── about/             # 关于/设置
+│   ├── components/            # 公共组件
+│   │   ├── house-card/        # 房源卡片
+│   │   ├── auth-modal/        # 认证弹窗
+│   │   └── ...
+│   ├── utils/                 # 工具函数
+│   │   ├── request.js         # 网络请求封装
+│   │   ├── util.js            # 通用工具
+│   │   └── constants.js       # 常量定义
+│   ├── images/                # 图片资源
+│   ├── app.js                 # 全局逻辑
+│   ├── app.json               # 全局配置
+│   ├── app.wxss               # 全局样式
+│   └── sitemap.json           # 索引配置
+├── cloudfunctions/            # 云函数（若使用云开发）
+│   ├── login/                 # 登录
+│   ├── publishHouse/          # 发布房源
+│   ├── auditHouse/            # 审核房源
+│   └── ...
+└── project.config.json        # 项目配置
+
+管理后台（Web）结构
+admin/
+├── src/
+│   ├── api/                   # API请求模块
+│   ├── assets/                # 静态资源
+│   ├── components/            # 公共组件
+│   ├── views/                 # 页面视图
+│   │   ├── dashboard/         # 数据看板
+│   │   ├── audit/             # 审核管理
+│   │   ├── users/             # 用户管理
+│   │   ├── houses/            # 房源管理
+│   │   ├── complaints/        # 举报处理
+│   │   └── settings/          # 系统设置
+│   ├── router/                # 路由
+│   ├── store/                 # 状态管理
+│   ├── utils/                 # 工具
+│   └── App.vue
+├── public/
+└── package.json
+
+🧑‍💻 编码规范
+*通用规则
+缩进：使用2个空格
+
+命名：
+
+变量/函数：camelCase
+
+常量：UPPER_SNAKE_CASE
+
+组件/类：PascalCase
+
+文件/文件夹：kebab-case（小程序页面文件夹除外，可使用驼峰）
+
+CSS类：kebab-case
+
+注释：关键逻辑必须写注释，函数注释使用JSDoc风格
+
+代码长度：单行不超过120字符
+
+异步处理：优先使用 async/await，避免回调地狱
+
+错误处理：所有API请求和重要操作必须有try-catch，并向用户展示友好提示
+
+
+*小程序特有规范
+WXML结构保持语义化，合理使用 block、view、text 等标签
+
+WXSS使用Flex布局为主，避免滥用绝对定位
+
+事件处理函数命名：handleXxx（如 handleTapHouse）
+
+数据请求统一封装在 utils/request.js 中，支持loading和错误提示
+
+页面间传参避免传递大量数据，优先使用全局数据或缓存
+
+*后端规范（JAVA）
+路由命名：/api/v1/resource
+
+控制器命名：xxxController.js，方法名对应HTTP方法（get, post, put, delete）
+
+中间件：鉴权、日志、错误处理等应抽离为独立中间件
+
+数据库查询：注意N+1问题，使用关联查询优化
+
+
+🧩 功能模块详细说明（供AI参考）
+1. 用户模块
+注册/登录：微信小程序一键授权登录，获取openId，记录用户信息（头像、昵称）
+
+实名认证：调用腾讯云人脸核身或手动上传身份证照片，管理员后台审核；认证后 isVerified = true
+
+个人资料：可编辑手机号、微信号（选填），手机号需短信验证
+
+2. 房源模块
+发布：表单包含：
+
+标题（必填，20字内）
+
+户型（选择：1室/2室/...）
+
+面积（数字）
+
+租金（数字，单位元/月）
+
+押金方式（押一付一/押一付三/面议）
+
+租期（起止日期）
+
+可入住时间
+
+描述（500字内）
+
+图片（最多9张，支持从相册选择或拍照）
+
+地理位置（通过地图选点，自动解析省市区+详细地址+经纬度）
+
+编辑/下架：仅本人可操作，下架后房源不再展示
+
+审核状态：发布后进入待审核，管理员通过后状态变为“已上架”；若驳回需填写驳回原因
+
+房源列表：支持分页、按发布时间倒序
+
+搜索/筛选：
+
+关键词搜索标题/描述
+
+筛选：区域（多选）、租金范围（区间）、户型、租期（起止日期模糊匹配）
+
+排序：默认综合，可选最新、租金低-高、面积大-小
+
+3. 地图找房
+使用腾讯地图SDK，在地图上以聚合标记显示房源
+
+点击标记弹出房源卡片（图片、租金、标题）
+
+卡片点击跳转详情页
+
+地图视野移动后自动刷新房源（防抖）
+
+4. 收藏与关注
+用户可收藏房源，在“我的收藏”查看
+
+收藏列表支持删除、查看房源状态（是否已下架）
+
+5. 即时通讯
+使用云开发数据库的实时能力或腾讯云IM
+
+聊天界面支持发送文字、图片、房源卡片
+
+未读消息计数，会话列表按最后消息时间排序
+
+支持消息已读状态
+
+6. 举报与审核
+房源详情页、用户主页提供“举报”按钮
+
+举报类型：虚假信息、中介冒充个人、违规收费、其他
+
+管理员后台可查看举报，并一键下架房源/封禁用户
+
+所有房源发布、认证申请均需后台审核
+
+7. 管理后台
+登录：管理员账号密码（可绑定微信扫码）
+
+仪表盘：展示今日新增房源、待审核数、总用户数等，图表展示趋势
+
+审核列表：按时间倒序展示待审核房源/认证，支持通过/驳回
+
+用户管理：列表展示用户信息，可禁用、重置认证
+
+举报管理：处理用户举报，记录处理结果
+
+系统设置：配置敏感词、审核开关、轮播图等
+
+🗄️ 数据库设计要点
+用户表（users）
+_id (string)
+
+openId (string, 唯一)
+
+nickName (string)
+
+avatarUrl (string)
+
+phone (string, 可选)
+
+wechatId (string, 可选)
+
+isVerified (boolean, default false)
+
+idCardFront (string, 身份证正面照URL)
+
+idCardBack (string, 身份证反面照URL)
+
+realName (string, 真实姓名)
+
+idCardNumber (string, 身份证号)
+
+status (number, 0正常 1禁用)
+
+createTime (date)
+
+updateTime (date)
+
+房源表（houses）
+_id (string)
+
+userId (string, 发布者ID)
+
+title (string)
+
+type (string, 户型)
+
+area (number, 面积)
+
+price (number, 租金)
+
+deposit (string, 押金方式)
+
+startDate (date, 租期开始)
+
+endDate (date, 租期结束)
+
+availableDate (date, 可入住时间)
+
+description (string)
+
+images (array[string], 图片URL数组)
+
+location (object: { province, city, district, address, latitude, longitude })
+
+status (string: pending / approved / rejected / offline)
+
+rejectReason (string, 驳回原因)
+
+viewCount (number)
+
+favoriteCount (number)
+
+createTime (date)
+
+updateTime (date)
+
+收藏表（favorites）
+_id (string)
+
+userId (string)
+
+houseId (string)
+
+createTime (date)
+
+消息表（messages）
+_id (string)
+
+fromUserId (string)
+
+toUserId (string)
+
+content (string)
+
+msgType (text / image / houseCard)
+
+houseId (string, 若为房源卡片)
+
+isRead (boolean)
+
+createTime (date)
+
+举报表（complaints）
+_id (string)
+
+complainantId (string, 举报人)
+
+targetType (house / user)
+
+targetId (string)
+
+reason (string)
+
+description (string)
+
+status (pending / resolved / rejected)
+
+result (string, 处理结果)
+
+createTime (date)
+
+updateTime (date)
+
+✅ 测试要求
+单元测试：核心工具函数、云函数需编写测试（可使用jest）
+
+集成测试：关键流程（发布-审核-搜索-收藏-聊天）需测试通过
+
+UI测试：小程序真机预览，确保各机型适配（iPhone、Android）
+
+安全测试：接口鉴权、防止SQL注入/XSS、敏感信息过滤
+
+📦 部署与运维
+微信云开发
+环境：分别创建 dev 和 prod 环境
+
+云函数：使用 cloudbase 部署，配置超时时间和内存
+
+云存储：图片上传后通过临时链接展示，避免盗链
+
+数据库：创建索引优化查询，定期备份
+
+自建服务器
+服务器：推荐使用腾讯云/阿里云轻量应用服务器
+
+部署：使用tomcat + Nginx
+
+域名：需备案，配置SSL证书
+
+
+🔒 安全与合规
+用户隐私：手机号、微信号等敏感信息仅限本人和管理员可见
+
+数据加密：密码（如果有）需bcrypt加密，身份证号存储前加密
+
+接口鉴权：小程序端通过云函数调用或JWT鉴权；管理后台使用session或JWT
+
+内容审核：所有用户生成内容（图片、文本）需经过敏感词过滤和人工审核
+
+小程序合规：配置用户隐私协议，获取用户信息前需弹窗授权
+
+🤖 AI生成提示
+在生成代码时，请严格遵循上述技术栈、项目结构、编码规范和功能说明。对于不确定的细节，请使用项目内已有的类似实现作为参考，或询问进一步明确。
+
+
+

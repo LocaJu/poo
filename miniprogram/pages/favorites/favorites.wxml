@@ -1,0 +1,16 @@
+<view class="container">
+  <view class="list" wx:if="{{list.length > 0}}">
+    <block wx:for="{{list}}" wx:key="id">
+      <view class="item" data-id="{{item.id}}" bindtap="handleTap">
+        <image class="thumb" src="{{item.images ? item.images.split(',')[0] : ''}}" mode="aspectFill" />
+        <view class="info">
+          <text class="title">{{item.title}}</text>
+          <text class="meta">{{item.type}} · {{item.area}}㎡</text>
+          <text class="price">{{item.price}}元/月</text>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="empty" wx:else>暂无收藏</view>
+  <view class="nomore" wx:if="{{!hasMore && list.length > 0}}">没有更多了</view>
+</view>

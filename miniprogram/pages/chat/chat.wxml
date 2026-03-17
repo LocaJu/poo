@@ -1,0 +1,11 @@
+<view class="container">
+  <view class="empty" wx:if="{{list.length === 0}}">
+    <text>暂无会话</text>
+    <text class="hint">在房源详情页点击「联系TA」开始聊天</text>
+  </view>
+  <view class="list" wx:else>
+    <block wx:for="{{list}}" wx:key="id">
+      <view class="item" data-id="{{item.id}}" bindtap="handleTap">会话</view>
+    </block>
+  </view>
+</view>

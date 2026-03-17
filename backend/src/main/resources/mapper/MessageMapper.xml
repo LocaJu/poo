@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sublethub.mapper.MessageMapper">
+
+  <resultMap id="BaseResultMap" type="com.sublethub.entity.Message">
+    <id column="id" property="id"/>
+    <result column="from_user_id" property="fromUserId"/>
+    <result column="to_user_id" property="toUserId"/>
+    <result column="content" property="content"/>
+    <result column="msg_type" property="msgType"/>
+    <result column="house_id" property="houseId"/>
+    <result column="is_read" property="isRead"/>
+    <result column="create_time" property="createTime"/>
+  </resultMap>
+
+  <select id="selectConversation" resultMap="BaseResultMap">
+    SELECT * FROM messages
+    WHERE (from_user_id = #{userId1} AND to_user_id = #{userId2})
+       OR (from_user_id = #{userId2} AND to_user_id = #{userId1})
+    ORDER BY create_time DESC LIMIT #{offset}, #{limit}
+  </select>
+
+  <select id="countUnreadByToUserId" resultType="long">
+    SELECT COUNT(*) FROM messages WHERE to_user_id = #{toUserId} AND is_read = 0
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO messages (from_user_id, to_user_id, content, msg_type, house_id, is_read, create_time)
+    VALUES (#{fromUserId}, #{toUserId}, #{content}, #{msgType}, #{houseId}, #{isRead}, NOW())
+  </insert>
+</mapper>

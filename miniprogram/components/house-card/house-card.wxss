@@ -1,0 +1,33 @@
+.house-card {
+  display: flex;
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+.house-card .thumb {
+  width: 220rpx;
+  height: 220rpx;
+  flex-shrink: 0;
+  background: #eee;
+}
+.house-card .info {
+  flex: 1;
+  padding: 24rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.house-card .title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #333;
+}
+.house-card .meta {
+  font-size: 24rpx;
+  color: #999;
+}
+.house-card .price {
+  font-size: 32rpx;
+  color: #07c160;
+  font-weight: 600;
+}

@@ -1,0 +1,73 @@
+.swiper {
+  height: 400rpx;
+  background: #eee;
+}
+.slide-img {
+  width: 100%;
+  height: 100%;
+}
+.no-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #999;
+}
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-top: 24rpx;
+}
+.card .price {
+  font-size: 40rpx;
+  color: #07c160;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 16rpx;
+}
+.card .title {
+  font-size: 34rpx;
+  font-weight: 500;
+  color: #333;
+  display: block;
+  margin-bottom: 12rpx;
+}
+.card .meta {
+  font-size: 26rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 24rpx;
+}
+.card .desc {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+  display: block;
+}
+.card .location {
+  margin-top: 24rpx;
+  font-size: 26rpx;
+  color: #999;
+}
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 32rpx;
+  margin-top: 24rpx;
+  background: #fff;
+  border-radius: 16rpx;
+}
+.actions .btn {
+  font-size: 28rpx;
+}
+.actions .primary {
+  flex: 1;
+  margin: 0 24rpx;
+  background: #07c160;
+  color: #fff;
+  border: none;
+  border-radius: 8rpx;
+}
+.icon-btn .active { color: #07c160; }

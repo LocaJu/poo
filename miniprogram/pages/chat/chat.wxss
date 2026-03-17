@@ -1,0 +1,2 @@
+.empty { text-align: center; padding: 80rpx 32rpx; }
+.empty .hint { display: block; margin-top: 16rpx; font-size: 24rpx; color: #999; }

@@ -1,0 +1,8 @@
+<view class="house-card" bindtap="handleTap" wx:if="{{house}}">
+  <image class="thumb" src="{{house.images ? house.images.split(',')[0] : ''}}" mode="aspectFill" />
+  <view class="info">
+    <text class="title">{{house.title}}</text>
+    <text class="meta">{{house.type}} · {{house.area}}㎡</text>
+    <text class="price">{{house.price}}元/月</text>
+  </view>
+</view>

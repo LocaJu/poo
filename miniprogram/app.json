@@ -1,0 +1,58 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/search/search",
+    "pages/detail/detail",
+    "pages/publish/publish",
+    "pages/map/map",
+    "pages/chat/chat",
+    "pages/chat-detail/chat-detail",
+    "pages/profile/profile",
+    "pages/my-houses/my-houses",
+    "pages/favorites/favorites",
+    "pages/about/about"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#07c160",
+    "navigationBarTitleText": "SubletHub转租",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#07c160",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab-home.png",
+        "selectedIconPath": "images/tab-home-active.png"
+      },
+      {
+        "pagePath": "pages/map/map",
+        "text": "地图",
+        "iconPath": "images/tab-map.png",
+        "selectedIconPath": "images/tab-map-active.png"
+      },
+      {
+        "pagePath": "pages/chat/chat",
+        "text": "消息",
+        "iconPath": "images/tab-chat.png",
+        "selectedIconPath": "images/tab-chat-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/tab-profile.png",
+        "selectedIconPath": "images/tab-profile-active.png"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于地图找房与发布房源位置"
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}

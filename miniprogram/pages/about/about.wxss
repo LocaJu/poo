@@ -1,0 +1,6 @@
+.card { background: #fff; border-radius: 16rpx; padding: 32rpx; margin-bottom: 24rpx; }
+.card .title { font-size: 32rpx; font-weight: 500; display: block; }
+.card .version { font-size: 24rpx; color: #999; display: block; margin-top: 8rpx; }
+.card .desc { font-size: 28rpx; color: #666; display: block; margin-top: 16rpx; }
+.card .section { display: block; padding: 24rpx 0; border-bottom: 1rpx solid #f0f0f0; }
+.card .section:last-child { border-bottom: none; }

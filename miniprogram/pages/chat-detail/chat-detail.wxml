@@ -1,0 +1,3 @@
+<view class="container">
+  <view class="empty">聊天功能需接入腾讯云IM或云开发</view>
+</view>

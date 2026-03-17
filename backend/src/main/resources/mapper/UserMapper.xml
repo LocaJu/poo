@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sublethub.mapper.UserMapper">
+
+  <resultMap id="BaseResultMap" type="com.sublethub.entity.User">
+    <id column="id" property="id"/>
+    <result column="open_id" property="openId"/>
+    <result column="nick_name" property="nickName"/>
+    <result column="avatar_url" property="avatarUrl"/>
+    <result column="phone" property="phone"/>
+    <result column="wechat_id" property="wechatId"/>
+    <result column="is_verified" property="isVerified"/>
+    <result column="id_card_front" property="idCardFront"/>
+    <result column="id_card_back" property="idCardBack"/>
+    <result column="real_name" property="realName"/>
+    <result column="id_card_number" property="idCardNumber"/>
+    <result column="status" property="status"/>
+    <result column="create_time" property="createTime"/>
+    <result column="update_time" property="updateTime"/>
+  </resultMap>
+
+  <select id="selectById" resultMap="BaseResultMap">
+    SELECT * FROM users WHERE id = #{id}
+  </select>
+
+  <select id="selectByOpenId" resultMap="BaseResultMap">
+    SELECT * FROM users WHERE open_id = #{openId}
+  </select>
+
+  <select id="selectPage" resultMap="BaseResultMap">
+    SELECT * FROM users ORDER BY create_time DESC LIMIT #{offset}, #{limit}
+  </select>
+
+  <select id="count" resultType="long">
+    SELECT COUNT(*) FROM users
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO users (open_id, nick_name, avatar_url, phone, wechat_id, is_verified,
+      id_card_front, id_card_back, real_name, id_card_number, status, create_time, update_time)
+    VALUES (#{openId}, #{nickName}, #{avatarUrl}, #{phone}, #{wechatId}, #{isVerified},
+      #{idCardFront}, #{idCardBack}, #{realName}, #{idCardNumber}, #{status}, NOW(), NOW())
+  </insert>
+
+  <update id="updateById">
+    UPDATE users SET
+      nick_name = #{nickName}, avatar_url = #{avatarUrl}, phone = #{phone}, wechat_id = #{wechatId},
+      is_verified = #{isVerified}, id_card_front = #{idCardFront}, id_card_back = #{idCardBack},
+      real_name = #{realName}, id_card_number = #{idCardNumber}, status = #{status},
+      update_time = NOW()
+    WHERE id = #{id}
+  </update>
+</mapper>

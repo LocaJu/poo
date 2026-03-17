@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sublethub.mapper.HouseMapper">
+
+  <resultMap id="BaseResultMap" type="com.sublethub.entity.House">
+    <id column="id" property="id"/>
+    <result column="user_id" property="userId"/>
+    <result column="title" property="title"/>
+    <result column="type" property="type"/>
+    <result column="area" property="area"/>
+    <result column="price" property="price"/>
+    <result column="deposit" property="deposit"/>
+    <result column="start_date" property="startDate"/>
+    <result column="end_date" property="endDate"/>
+    <result column="available_date" property="availableDate"/>
+    <result column="description" property="description"/>
+    <result column="images" property="images"/>
+    <result column="status" property="status"/>
+    <result column="reject_reason" property="rejectReason"/>
+    <result column="view_count" property="viewCount"/>
+    <result column="favorite_count" property="favoriteCount"/>
+    <result column="create_time" property="createTime"/>
+    <result column="update_time" property="updateTime"/>
+    <association property="location" javaType="com.sublethub.entity.HouseLocation">
+      <result column="loc_province" property="province"/>
+      <result column="loc_city" property="city"/>
+      <result column="loc_district" property="district"/>
+      <result column="loc_address" property="address"/>
+      <result column="loc_latitude" property="latitude"/>
+      <result column="loc_longitude" property="longitude"/>
+    </association>
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, user_id, title, type, area, price, deposit, start_date, end_date, available_date,
+    description, images, loc_province, loc_city, loc_district, loc_address, loc_latitude, loc_longitude,
+    status, reject_reason, view_count, favorite_count, create_time, update_time
+  </sql>
+
+  <select id="selectById" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM houses WHERE id = #{id}
+  </select>
+
+  <select id="selectByUserId" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM houses
+    WHERE user_id = #{userId} ORDER BY create_time DESC LIMIT #{offset}, #{limit}
+  </select>
+
+  <select id="countByUserId" resultType="long">
+    SELECT COUNT(*) FROM houses WHERE user_id = #{userId}
+  </select>
+
+  <select id="selectByStatus" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM houses
+    WHERE status = #{status} ORDER BY create_time DESC LIMIT #{offset}, #{limit}
+  </select>
+
+  <select id="countByStatus" resultType="long">
+    SELECT COUNT(*) FROM houses
+    <if test="status != null">WHERE status = #{status}</if>
+  </select>
+
+  <select id="selectPage" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM houses ORDER BY create_time DESC LIMIT #{offset}, #{limit}
+  </select>
+
+  <select id="countAll" resultType="long">
+    SELECT COUNT(*) FROM houses
+  </select>
+
+  <select id="selectApprovedForQuery" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM houses
+    <where>
+      <if test="true">status = 'approved'</if>
+      <if test="keyword != null and keyword != ''">
+        AND (title LIKE CONCAT('%', #{keyword}, '%') OR description LIKE CONCAT('%', #{keyword}, '%'))
+      </if>
+      <if test="districts != null and districts.size() > 0">
+        AND loc_district IN
+        <foreach collection="districts" item="d" open="(" separator="," close=")">#{d}</foreach>
+      </if>
+      <if test="priceMin != null">AND price &gt;= #{priceMin}</if>
+      <if test="priceMax != null">AND price &lt;= #{priceMax}</if>
+      <if test="type != null and type != ''">AND type = #{type}</if>
+      <if test="startDate != null">AND start_date &lt;= #{startDate}</if>
+      <if test="endDate != null">AND end_date &gt;= #{endDate}</if>
+    </where>
+    <choose>
+      <when test="orderBy == 'price_asc'">ORDER BY price ASC</when>
+      <when test="orderBy == 'price_desc'">ORDER BY price DESC</when>
+      <when test="orderBy == 'area_desc'">ORDER BY area DESC</when>
+      <otherwise>ORDER BY create_time DESC</otherwise>
+    </choose>
+    LIMIT #{offset}, #{limit}
+  </select>
+
+  <select id="countApprovedForQuery" resultType="long">
+    SELECT COUNT(*) FROM houses
+    <where>
+      <if test="true">status = 'approved'</if>
+      <if test="keyword != null and keyword != ''">
+        AND (title LIKE CONCAT('%', #{keyword}, '%') OR description LIKE CONCAT('%', #{keyword}, '%'))
+      </if>
+      <if test="districts != null and districts.size() > 0">
+        AND loc_district IN
+        <foreach collection="districts" item="d" open="(" separator="," close=")">#{d}</foreach>
+      </if>
+      <if test="priceMin != null">AND price &gt;= #{priceMin}</if>
+      <if test="priceMax != null">AND price &lt;= #{priceMax}</if>
+      <if test="type != null and type != ''">AND type = #{type}</if>
+      <if test="startDate != null">AND start_date &lt;= #{startDate}</if>
+      <if test="endDate != null">AND end_date &gt;= #{endDate}</if>
+    </where>
+  </select>
+
+  <select id="selectByIds" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM houses
+    WHERE id IN
+    <foreach collection="ids" item="id" open="(" separator="," close=")">#{id}</foreach>
+  </select>
+
+  <select id="countPending" resultType="long">
+    SELECT COUNT(*) FROM houses WHERE status = 'pending'
+  </select>
+
+  <select id="countTodayNewApproved" resultType="long">
+    SELECT COUNT(*) FROM houses WHERE status = 'approved'
+    AND create_time &gt;= CURDATE() AND create_time &lt; CURDATE() + INTERVAL 1 DAY
+  </select>
+
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO houses (user_id, title, type, area, price, deposit, start_date, end_date, available_date,
+      description, images, loc_province, loc_city, loc_district, loc_address, loc_latitude, loc_longitude,
+      status, reject_reason, view_count, favorite_count, create_time, update_time)
+    VALUES (#{userId}, #{title}, #{type}, #{area}, #{price}, #{deposit}, #{startDate}, #{endDate}, #{availableDate},
+      #{description}, #{images},
+      <choose>
+        <when test="location != null">#{location.province}, #{location.city}, #{location.district}, #{location.address}, #{location.latitude}, #{location.longitude},</when>
+        <otherwise>NULL, NULL, NULL, NULL, NULL, NULL,</otherwise>
+      </choose>
+      #{status}, #{rejectReason}, #{viewCount}, #{favoriteCount}, NOW(), NOW())
+  </insert>
+
+  <update id="updateById">
+    UPDATE houses SET
+      title = #{title}, type = #{type}, area = #{area}, price = #{price}, deposit = #{deposit},
+      start_date = #{startDate}, end_date = #{endDate}, available_date = #{availableDate},
+      description = #{description}, images = #{images},
+      loc_province = <if test="location != null">#{location.province}</if><if test="location == null">NULL</if>,
+      loc_city = <if test="location != null">#{location.city}</if><if test="location == null">NULL</if>,
+      loc_district = <if test="location != null">#{location.district}</if><if test="location == null">NULL</if>,
+      loc_address = <if test="location != null">#{location.address}</if><if test="location == null">NULL</if>,
+      loc_latitude = <if test="location != null">#{location.latitude}</if><if test="location == null">NULL</if>,
+      loc_longitude = <if test="location != null">#{location.longitude}</if><if test="location == null">NULL</if>,
+      status = #{status}, reject_reason = #{rejectReason}, view_count = #{viewCount}, favorite_count = #{favoriteCount},
+      update_time = NOW()
+    WHERE id = #{id}
+  </update>
+</mapper>
