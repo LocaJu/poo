@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "关于/设置"
+  "navigationBarTitleText": "关于/设置",
+  "navigationBarBackgroundColor": "#0F766E",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#F4F6F8"
 }

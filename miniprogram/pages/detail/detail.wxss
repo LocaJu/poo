@@ -1,73 +1,119 @@
-.swiper {
-  height: 400rpx;
-  background: #eee;
+.container {
+  padding-bottom: 48rpx;
 }
+
+.swiper {
+  height: 420rpx;
+  background: var(--sh-border-light);
+  border-radius: 0 0 var(--sh-radius-lg) var(--sh-radius-lg);
+  overflow: hidden;
+  margin: -24rpx -24rpx 0;
+  width: calc(100% + 48rpx);
+}
+
 .slide-img {
   width: 100%;
   height: 100%;
 }
+
 .no-img {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-  color: #999;
+  color: var(--sh-text-muted);
+  font-size: 28rpx;
+  background: linear-gradient(160deg, var(--sh-primary-faint), var(--sh-page-bg));
 }
+
 .card {
-  background: #fff;
-  border-radius: 16rpx;
-  padding: 32rpx;
-  margin-top: 24rpx;
+  background: var(--sh-surface);
+  border-radius: var(--sh-radius-lg);
+  padding: 36rpx;
+  margin-top: 28rpx;
+  box-shadow: var(--sh-shadow-card);
+  border: 1rpx solid var(--sh-border-light);
 }
+
 .card .price {
-  font-size: 40rpx;
-  color: #07c160;
-  font-weight: 600;
+  font-size: 44rpx;
+  color: var(--sh-price);
+  font-weight: 800;
   display: block;
   margin-bottom: 16rpx;
+  letter-spacing: -1rpx;
 }
+
 .card .title {
-  font-size: 34rpx;
-  font-weight: 500;
-  color: #333;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--sh-text);
   display: block;
-  margin-bottom: 12rpx;
+  margin-bottom: 14rpx;
+  line-height: 1.35;
 }
+
 .card .meta {
   font-size: 26rpx;
-  color: #999;
+  color: var(--sh-text-tertiary);
   display: block;
-  margin-bottom: 24rpx;
+  margin-bottom: 28rpx;
+  font-weight: 500;
 }
+
 .card .desc {
   font-size: 28rpx;
-  color: #666;
-  line-height: 1.6;
+  color: var(--sh-text-secondary);
+  line-height: 1.65;
   display: block;
 }
+
 .card .location {
-  margin-top: 24rpx;
+  margin-top: 28rpx;
   font-size: 26rpx;
-  color: #999;
+  color: var(--sh-text-muted);
+  padding: 20rpx;
+  background: var(--sh-page-bg);
+  border-radius: var(--sh-radius-sm);
+  border-left: 4rpx solid var(--sh-primary-mid);
 }
+
 .actions {
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  padding: 32rpx;
-  margin-top: 24rpx;
-  background: #fff;
-  border-radius: 16rpx;
+  justify-content: space-between;
+  gap: 20rpx;
+  padding: 28rpx 24rpx;
+  margin-top: 28rpx;
+  background: var(--sh-surface);
+  border-radius: var(--sh-radius-lg);
+  box-shadow: var(--sh-shadow-card);
+  border: 1rpx solid var(--sh-border-light);
 }
+
 .actions .btn {
-  font-size: 28rpx;
+  font-size: 26rpx;
+  color: var(--sh-text-secondary);
 }
+
+.actions .btn.text {
+  color: var(--sh-text-muted);
+  padding: 12rpx 8rpx;
+}
+
 .actions .primary {
   flex: 1;
-  margin: 0 24rpx;
-  background: #07c160;
-  color: #fff;
-  border: none;
-  border-radius: 8rpx;
+  margin: 0 !important;
+  background: linear-gradient(135deg, var(--sh-primary) 0%, var(--sh-primary-mid) 100%) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: var(--sh-radius-pill) !important;
+  font-weight: 600 !important;
+  font-size: 30rpx !important;
+  box-shadow: var(--sh-shadow-md);
 }
-.icon-btn .active { color: #07c160; }
+
+.icon-btn .active {
+  color: var(--sh-primary);
+  font-weight: 600;
+}

@@ -14,32 +14,22 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#07c160",
-    "navigationBarTitleText": "SubletHub转租",
-    "navigationBarTextStyle": "white"
+    "navigationBarBackgroundColor": "#0F766E",
+    "navigationBarTitleText": "转租帮",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F4F6F8"
   },
   "tabBar": {
-    "color": "#999",
-    "selectedColor": "#07c160",
-    "backgroundColor": "#fff",
+    "color": "#A1A1AA",
+    "selectedColor": "#0F766E",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页",
+        "text": "房源",
         "iconPath": "images/tab-home.png",
         "selectedIconPath": "images/tab-home-active.png"
-      },
-      {
-        "pagePath": "pages/map/map",
-        "text": "地图",
-        "iconPath": "images/tab-map.png",
-        "selectedIconPath": "images/tab-map-active.png"
-      },
-      {
-        "pagePath": "pages/chat/chat",
-        "text": "消息",
-        "iconPath": "images/tab-chat.png",
-        "selectedIconPath": "images/tab-chat-active.png"
       },
       {
         "pagePath": "pages/profile/profile",
@@ -51,7 +41,7 @@
   },
   "permission": {
     "scope.userLocation": {
-      "desc": "用于地图找房与发布房源位置"
+      "desc": "用于地图找房、距离排序与发布房源位置"
     }
   },
   "sitemapLocation": "sitemap.json"

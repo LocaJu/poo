@@ -21,7 +21,12 @@ const files = [
   'tab-profile.png',
   'tab-profile-active.png',
   'avatar.png',
-  'placeholder.png'
+  'placeholder.png',
+  'banner-1.png',
+  'banner-2.png',
+  'banner-3.png',
+  'banner-4.png',
+  'banner-5.png'
 ];
 
 if (!fs.existsSync(dir)) {
@@ -33,4 +38,4 @@ files.forEach((name) => {
   console.log('Created:', name);
 });
 
-console.log('Done. TabBar icons + avatar.png、placeholder.png created in miniprogram/images/');
+console.log('Done. TabBar + avatar + placeholder + banner-1~5 created in miniprogram/images/');

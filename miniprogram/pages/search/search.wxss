@@ -1,32 +1,93 @@
-.search-row { padding: 16rpx 0; }
-.search-input {
-  background: #fff;
-  border-radius: 8rpx;
-  padding: 20rpx;
-  font-size: 28rpx;
+.container {
+  padding: 24rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
+
+.search-row {
+  padding: 8rpx 0 20rpx;
+}
+
+.search-input {
+  background: var(--sh-surface);
+  border-radius: var(--sh-radius-md);
+  padding: 24rpx 28rpx;
+  font-size: 28rpx;
+  color: var(--sh-text);
+  border: 1rpx solid var(--sh-border-light);
+  box-shadow: var(--sh-shadow-sm);
+}
+
 .order-bar {
   display: flex;
-  gap: 32rpx;
-  padding: 20rpx 0;
+  gap: 28rpx;
+  padding: 24rpx 8rpx;
   font-size: 26rpx;
-  color: #666;
+  color: var(--sh-text-tertiary);
+  flex-wrap: wrap;
 }
-.order-item.active { color: #07c160; font-weight: 500; }
-.list { display: flex; flex-direction: column; gap: 24rpx; margin-top: 16rpx; }
+
+.order-item.active {
+  color: var(--sh-primary);
+  font-weight: 700;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  margin-top: 8rpx;
+}
+
 .house-item {
   display: flex;
-  background: #fff;
-  border-radius: 16rpx;
+  background: var(--sh-surface);
+  border-radius: var(--sh-radius-lg);
   overflow: hidden;
+  box-shadow: var(--sh-shadow-card);
+  border: 1rpx solid var(--sh-border-light);
 }
+
 .house-item .thumb {
-  width: 220rpx; height: 220rpx; flex-shrink: 0; background: #eee;
+  width: 220rpx;
+  height: 220rpx;
+  flex-shrink: 0;
+  background: var(--sh-border-light);
 }
+
 .house-item .info {
-  flex: 1; padding: 24rpx; display: flex; flex-direction: column; justify-content: space-between;
+  flex: 1;
+  padding: 24rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
 }
-.house-item .title { font-size: 30rpx; font-weight: 500; color: #333; }
-.house-item .meta { font-size: 24rpx; color: #999; }
-.house-item .price { font-size: 32rpx; color: #07c160; font-weight: 600; }
-.empty, .nomore { text-align: center; padding: 48rpx; color: #999; }
+
+.house-item .title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--sh-text);
+  line-height: 1.35;
+}
+
+.house-item .meta {
+  font-size: 24rpx;
+  color: var(--sh-text-muted);
+  margin-top: 8rpx;
+}
+
+.house-item .price {
+  font-size: 34rpx;
+  color: var(--sh-price);
+  font-weight: 800;
+  margin-top: 12rpx;
+}
+
+.empty,
+.nomore {
+  text-align: center;
+  padding: 56rpx 24rpx;
+  color: var(--sh-text-muted);
+  font-size: 26rpx;
+}

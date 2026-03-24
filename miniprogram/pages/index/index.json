@@ -1,4 +1,7 @@
 {
-  "navigationBarTitleText": "首页",
-  "enablePullDownRefresh": true
+  "navigationBarTitleText": "转租帮",
+  "navigationBarBackgroundColor": "#0F766E",
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#F4F6F8"
 }

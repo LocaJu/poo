@@ -1,33 +1,42 @@
 .house-card {
   display: flex;
-  background: #fff;
-  border-radius: 16rpx;
+  background: var(--sh-surface);
+  border-radius: var(--sh-radius-lg);
   overflow: hidden;
+  box-shadow: var(--sh-shadow-card);
+  border: 1rpx solid var(--sh-border-light);
 }
+
 .house-card .thumb {
   width: 220rpx;
   height: 220rpx;
   flex-shrink: 0;
-  background: #eee;
+  background: var(--sh-border-light);
 }
+
 .house-card .info {
   flex: 1;
   padding: 24rpx;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-width: 0;
 }
+
 .house-card .title {
   font-size: 30rpx;
-  font-weight: 500;
-  color: #333;
+  font-weight: 600;
+  color: var(--sh-text);
+  line-height: 1.35;
 }
+
 .house-card .meta {
   font-size: 24rpx;
-  color: #999;
+  color: var(--sh-text-muted);
 }
+
 .house-card .price {
   font-size: 32rpx;
-  color: #07c160;
-  font-weight: 600;
+  color: var(--sh-price);
+  font-weight: 800;
 }

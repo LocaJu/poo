@@ -1,7 +1,53 @@
-.item { display: flex; background: #fff; border-radius: 16rpx; margin-bottom: 24rpx; overflow: hidden; }
-.item .thumb { width: 200rpx; height: 200rpx; flex-shrink: 0; background: #eee; }
-.item .info { flex: 1; padding: 24rpx; }
-.item .title { font-size: 30rpx; display: block; }
-.item .status { font-size: 24rpx; color: #999; display: block; margin-top: 8rpx; }
-.item .price { font-size: 32rpx; color: #07c160; display: block; margin-top: 8rpx; }
-.empty, .nomore { text-align: center; padding: 48rpx; color: #999; }
+.item {
+  display: flex;
+  background: var(--sh-surface);
+  border-radius: var(--sh-radius-lg);
+  margin-bottom: 24rpx;
+  overflow: hidden;
+  box-shadow: var(--sh-shadow-card);
+  border: 1rpx solid var(--sh-border-light);
+}
+
+.item .thumb {
+  width: 200rpx;
+  height: 200rpx;
+  flex-shrink: 0;
+  background: var(--sh-border-light);
+}
+
+.item .info {
+  flex: 1;
+  padding: 24rpx;
+  min-width: 0;
+}
+
+.item .title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: var(--sh-text);
+  display: block;
+  line-height: 1.35;
+}
+
+.item .status {
+  font-size: 24rpx;
+  color: var(--sh-text-muted);
+  display: block;
+  margin-top: 8rpx;
+}
+
+.item .price {
+  font-size: 32rpx;
+  color: var(--sh-price);
+  font-weight: 800;
+  display: block;
+  margin-top: 8rpx;
+}
+
+.empty,
+.nomore {
+  text-align: center;
+  padding: 56rpx 24rpx;
+  color: var(--sh-text-muted);
+  font-size: 26rpx;
+}

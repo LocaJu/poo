@@ -1,22 +1,186 @@
-<view class="container">
-  <view class="search-bar" bindtap="handleTapSearch">
-    <text class="search-placeholder">搜索房源、区域</text>
+<view class="page">
+  <!-- 顶部轮播：5 张静态图，每 2 秒切换 -->
+  <swiper
+    class="top-banner-swiper"
+    autoplay
+    circular
+    interval="{{2000}}"
+    duration="{{500}}"
+    indicator-dots
+    indicator-color="rgba(255,255,255,0.45)"
+    indicator-active-color="#ffffff"
+  >
+    <block wx:for="{{bannerImages}}" wx:key="*this">
+      <swiper-item>
+        <image class="top-banner-img" src="{{item}}" mode="aspectFill" />
+      </swiper-item>
+    </block>
+  </swiper>
+
+  <!-- 品牌与头图区 -->
+  <view class="hero">
+    <view class="hero-inner">
+      <view class="brand-row">
+        <view class="brand-text">
+          <text class="brand-name">转租帮</text>
+          <text class="brand-slogan">~</text>
+          <text class="brand-slogan">|</text>
+        </view>
+      </view>
+      <view class="hero-illus" aria-hidden="true">
+        <text class="illus-emoji">🏠</text>
+        <text class="illus-emoji small">✨</text>
+      </view>
+    </view>
+    <!-- 搜索卡片 -->
+    <view class="search-card">
+      <picker mode="selector" range="{{cities}}" value="{{cityIndex}}" bindchange="onCityChange">
+        <view class="city-pill">
+          <text>{{cities[cityIndex]}}</text>
+          <text class="arrow">▼</text>
+        </view>
+      </picker>
+      <view class="search-input-wrap">
+        <text class="search-icon">🔍</text>
+        <input
+          class="search-input"
+          placeholder="输入房源关键字搜索"
+          value="{{searchKeyword}}"
+          confirm-type="search"
+          bindinput="onSearchInput"
+          bindconfirm="onSearchConfirm"
+        />
+      </view>
+    </view>
   </view>
-  <view class="list" wx:if="{{list.length > 0}}">
+
+  <!-- 筛选条 -->
+  <view class="filter-row">
+    <view class="filter-item" data-key="lease" bindtap="toggleFilter">
+      <text>剩余租期</text>
+      <text class="arrow-sm">▼</text>
+    </view>
+    <view class="filter-item" data-key="price" bindtap="toggleFilter">
+      <text>价格区间</text>
+      <text class="arrow-sm">▼</text>
+    </view>
+    <view class="filter-item" data-key="type" bindtap="toggleFilter">
+      <text>户型</text>
+      <text class="arrow-sm">▼</text>
+    </view>
+    <view class="filter-item" data-key="more" bindtap="toggleFilter">
+      <text>更多</text>
+      <text class="arrow-sm">▼</text>
+    </view>
+  </view>
+
+  <!-- 快捷标签 -->
+  <scroll-view class="tag-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="tag-inner">
+      <block wx:for="{{quickTags}}" wx:key="id">
+        <view
+          class="quick-tag {{item.active ? 'on' : ''}} {{item.active && item.id === 'contract' ? 'on-contract' : ''}}"
+          data-id="{{item.id}}"
+          bindtap="toggleQuickTag"
+        >
+          {{item.label}}
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <!-- 排序 -->
+  <view class="sort-row">
+    <view class="sort-text {{sortType === 'latest' ? 'on' : ''}}" data-sort="latest" bindtap="setSort">最新</view>
+    <view class="sort-text {{sortType === 'urgent' ? 'on' : ''}}" data-sort="urgent" bindtap="setSort">急转</view>
+    <view class="sort-ico {{sortType === 'distance' ? 'on' : ''}}" data-sort="distance" bindtap="setSort">
+      <text>距离</text>
+      <text class="arrows">⇅</text>
+    </view>
+    <view class="sort-ico {{sortType === 'lease' ? 'on' : ''}}" data-sort="lease" bindtap="setSort">
+      <text>租约</text>
+      <text class="arrows">⇅</text>
+    </view>
+    <view class="sort-ico {{sortType === 'price_low' || sortType === 'price_high' ? 'on' : ''}}" data-sort="price_low" bindtap="setSort">
+      <text>价格</text>
+      <text class="arrows">{{sortType === 'price_high' ? '↓' : '↑'}}</text>
+    </view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="list-wrap">
     <block wx:for="{{list}}" wx:key="id">
-      <view class="house-item" data-id="{{item.id}}" bindtap="handleTapHouse">
-        <image class="thumb" src="{{item.images ? item.images.split(',')[0] : '/images/placeholder.png'}}" mode="aspectFill" />
-        <view class="info">
-          <text class="title">{{item.title}}</text>
-          <text class="meta">{{item.type}} · {{item.area}}㎡</text>
-          <text class="price">{{item.price}}元/月</text>
+      <view class="house-card" data-id="{{item.id}}" bindtap="handleTapHouse">
+        <image
+          class="card-thumb"
+          src="{{item.images ? item.images.split(',')[0] : '/images/placeholder.png'}}"
+          mode="aspectFill"
+        />
+        <view class="card-body">
+          <view class="title-row">
+            <text class="rent-tag">{{item._rentTag}}</text>
+            <text class="card-title">{{item.title}}</text>
+          </view>
+          <view class="sub-tags" wx:if="{{item._subTags.length}}">
+            <block wx:for="{{item._subTags}}" wx:for-item="tg" wx:key="*this">
+              <text class="sub-tag">{{tg}}</text>
+            </block>
+          </view>
+          <view class="meta-row">
+            <text class="meta-text">{{item._metaLoc}}</text>
+            <text class="meta-dot">·</text>
+            <text class="meta-text">发布于{{item._pubDate}}</text>
+            <block wx:if="{{item._distText}}">
+              <text class="meta-dot">·</text>
+              <text class="meta-dist">{{item._distText}}</text>
+            </block>
+          </view>
+          <view class="price-row">
+            <text class="price-num">{{item.price}}</text>
+            <text class="price-unit">元/月</text>
+          </view>
         </view>
       </view>
     </block>
+    <view class="empty" wx:if="{{list.length === 0 && !loading}}">
+      <text>暂无房源，换个条件试试</text>
+    </view>
+    <view class="loading" wx:if="{{loading && list.length > 0}}">加载中…</view>
+    <view class="nomore" wx:if="{{!hasMore && list.length > 0}}">没有更多了</view>
+    <view class="list-bottom-space"></view>
   </view>
-  <view class="empty" wx:elif="{{!loading}}">
-    <text>暂无房源</text>
+
+  <!-- 遮罩 + 下拉筛选 -->
+  <view class="mask" wx:if="{{filterLeaseOpen || filterPriceOpen || filterTypeOpen}}" catchtap="maskClose"></view>
+  <view class="dropdown-panel" wx:if="{{filterLeaseOpen}}">
+    <picker mode="selector" range="{{leaseOptions}}" value="{{leaseIndex}}" bindchange="onLeasePick">
+      <view class="picker-line">选择剩余租期偏好</view>
+    </picker>
   </view>
-  <view class="loading" wx:if="{{loading && list.length > 0}}">加载中...</view>
-  <view class="nomore" wx:if="{{!hasMore && list.length > 0}}">没有更多了</view>
+  <view class="dropdown-panel" wx:if="{{filterPriceOpen}}">
+    <picker mode="selector" range="{{priceRanges}}" range-key="label" value="{{priceRangeIndex}}" bindchange="onPricePick">
+      <view class="picker-line">选择价格区间</view>
+    </picker>
+  </view>
+  <view class="dropdown-panel" wx:if="{{filterTypeOpen}}">
+    <picker mode="selector" range="{{typeOptions}}" value="{{typeIndex}}" bindchange="onTypePick">
+      <view class="picker-line">选择户型</view>
+    </picker>
+  </view>
+
+  <!-- 通勤条（固定在 TabBar 上方） -->
+  <view class="commute-bar safe-bottom-tab">
+    <view class="commute-left">
+      <text class="commute-icon">📍</text>
+      <text class="commute-label">通勤目的地 | </text>
+      <text class="commute-val">{{commuteText}}</text>
+    </view>
+    <button class="commute-btn" size="mini" bindtap="handleCommuteSet">设置</button>
+  </view>
+
+  <!-- 悬浮：地图 / 发布 -->
+  <view class="fab-wrap safe-bottom-tab">
+    <view class="fab fab-map" bindtap="goMap">地图</view>
+    <view class="fab fab-pub" bindtap="goPublish">发布</view>
+  </view>
 </view>

@@ -1,2 +1,9 @@
-.container { height: 100vh; }
-.map { width: 100%; height: 100%; }
+.container {
+  height: 100vh;
+  background: var(--sh-page-bg);
+}
+
+.map {
+  width: 100%;
+  height: 100%;
+}
